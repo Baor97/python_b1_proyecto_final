@@ -1,5 +1,5 @@
-from users import *
-from products import *
+from users.user import Cashier, Customer
+from products.product import Product
 
 class Order:
   def __init__(self, cashier:Cashier, customer:Customer):
@@ -8,16 +8,16 @@ class Order:
     self.products = []
 
   def add(self, product : Product):
-    #Write your code here
-    pass
+    self.products.append(product)
 
   def calculateTotal(self) -> float:
-    #Write your code here
-    pass
+    return sum(p.price for p in self.products)
   
   def show(self):    
     print("Hello : "+self.customer.describe())
     print("Was attended by : "+self.cashier.describe())
-    for product in self.products:
-      print(product.describe())
+
+    for i, product in enumerate(self.products, 1):
+      print(f"Product {i}: {product.describe()}")
+
     print(f"Total price : {self.calculateTotal()}")

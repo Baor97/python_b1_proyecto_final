@@ -101,11 +101,51 @@ f.	Agregar productos: Utilizar la instancia la clase 'Order', del paso c y llama
 
 
 """
-#Write your code here
-from users import *
+from util.file_manager import CSVFileManager
+from util.converter import CashierConverter, CustomerConverter, ProductConverter
+from orders.order import order
+#from users import *
 
     
 class PrepareOrder:
- #Write your code here
- pass
+ def __init__(self):
+        #Leer csv
+        self.cashiers_df = CSVFileManager("data/cashiers.csv").read()
+        self.customers_df = CSVFileManager("data/customers.csv").read()
+        self.products_df = CSVFileManager("data/hamburgers.csv").read()
 
+        #Convertir
+        self.cashiers = CashierConverter().convert(self.cashiers_df)
+        self.customers = CostumerConverter().convert(self.customers_df)
+        self.products = ProductConverter().convert(self.products_df)
+
+def find_cashier(self, dni):
+        for c in self.cashiers:
+                if c.dni == dni:
+                        return c
+        return None
+
+def find_customer(self, dni):
+        for c in self.customers:
+                if c.dni == dni:
+                        return c
+        return None
+
+def find_product(self, dni):
+        for p in self.products:
+                if p.id == id:
+                        return p
+        return None
+
+def run(self):
+
+        cashier = self.cashiers[0]
+        customer = self.customers[0]
+
+        order = Order(cashier, customer)
+
+        order.add(self.products[0])
+        order.add(self.products[1])
+
+        order.show()
+                      

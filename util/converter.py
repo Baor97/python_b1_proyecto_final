@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
-#Write your code here
+from users.user import Cashier, Customer
+from products.product import Hamburger, Soda, Drink, HappyMeal
 
 class Converter(ABC):
+
   @abstractmethod
   def convert(self,dataFrame,*args) -> list:
       pass  
@@ -10,14 +12,35 @@ class Converter(ABC):
       print(item.describe())
 
 class CashierConverter(Converter):
-  def convert(self,dataFrame):    
-    #Write your code here
-    pass
 
+  def convert(self, df, *args):
+    return [
+      Cashier(row["dni"], row["name"], row["age"], row["timetable"], row["salary"])
+      for _, row in df.iterrows()
+    ]
+
+      
 class CustomerConverter(Converter):
-  #Write your code here
-  pass
+  
+  def convert(self, df, *args):
+    return [
+      Customer(row["dni"], row["name"], row["age"], row["email"], row["postal_code"])
+      for _, row in df.iterrows()
+    ]
 
 class ProductConverter(Converter):
-  #Write your code here
-  pass
+  
+  def convert(self, df, *args):
+    products = []
+
+    for _, row in df.iterrows():
+      if row["type"] == "Hamburger":
+        products.append(Hamburger(row["id"], row["name"], row["price"]))
+        elif row["type"] == "Soda":
+          products.append(Soda(row["id"], row["name"], row["price"]))
+        elif row["type"] == "Drink":
+          products.append(Drink(row["id"], row["name"], row["price"]))
+        elif row["type"] == "HappyMeal":
+          products.append(HappyMeal(row["id"],row["name"], row["price"]))
+    
+    return products
